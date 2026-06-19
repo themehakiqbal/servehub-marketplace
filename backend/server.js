@@ -5,10 +5,14 @@ const connectDB = require('./config/db');
 
 dotenv.config();
 connectDB();
-
 const app = express();
 
-app.use(cors());
+// ✅ Make sure CORS is configured correctly
+app.use(cors({
+    origin: 'http://localhost:5173', // Your frontend URL
+    credentials: true,
+}));
+
 app.use(express.json());
 
 // Import routes
