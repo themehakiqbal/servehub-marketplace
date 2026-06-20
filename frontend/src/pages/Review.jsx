@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import { Container, Row, Col, Card, Form, Button, Alert, Rating } from 'react-bootstrap';
+import { Container, Row, Col, Card, Form, Button, Alert } from 'react-bootstrap'; // ← Removed Rating
 import { createReview } from '../services/api';
 
 const Review = () => {
@@ -53,7 +53,8 @@ const Review = () => {
                                                 key={star}
                                                 style={{
                                                     cursor: 'pointer',
-                                                    color: star <= rating ? '#FFD700' : '#ddd'
+                                                    color: star <= rating ? '#FFD700' : '#ddd',
+                                                    fontSize: '2.5rem'
                                                 }}
                                                 onClick={() => setRating(star)}
                                             >

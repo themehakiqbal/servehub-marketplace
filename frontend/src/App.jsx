@@ -1,6 +1,7 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import { AuthProvider, useAuth } from './context/AuthContext';
+import { ThemeProvider } from './context/ThemeContext';
 import Navbar from './components/common/Navbar';
 import Home from './pages/Home';
 import Login from './pages/Login';
@@ -27,7 +28,7 @@ function AppRoutes() {
     if (loading) {
         return (
             <div className="d-flex justify-content-center align-items-center" style={{ minHeight: '100vh' }}>
-                <div className="spinner-border text-primary" role="status">
+                <div className="spinner-border text-primary" role="status" style={{ width: '3rem', height: '3rem' }}>
                     <span className="visually-hidden">Loading...</span>
                 </div>
             </div>
@@ -58,7 +59,9 @@ function App() {
     return (
         <Router>
             <AuthProvider>
-                <AppRoutes />
+               <ThemeProvider>  
+                    <AppRoutes />
+                </ThemeProvider>
             </AuthProvider>
         </Router>
     );
