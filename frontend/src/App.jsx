@@ -1,7 +1,7 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import { AuthProvider, useAuth } from './context/AuthContext';
-import { ThemeProvider } from './context/ThemeContext';
+import { ThemeProvider } from './context/ThemeContext';  // ← ADD THIS
 import Navbar from './components/common/Navbar';
 import Home from './pages/Home';
 import Login from './pages/Login';
@@ -14,7 +14,9 @@ import Profile from './pages/Profile';
 import MyServices from './pages/MyServices';
 import MyRequests from './pages/MyRequests';
 import Review from './pages/Review';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
+// Protected Route Component
 const PrivateRoute = ({ children, roles }) => {
     const { user } = useAuth();
     if (!user) return <Navigate to="/login" />;
@@ -28,7 +30,7 @@ function AppRoutes() {
     if (loading) {
         return (
             <div className="d-flex justify-content-center align-items-center" style={{ minHeight: '100vh' }}>
-                <div className="spinner-border text-primary" role="status" style={{ width: '3rem', height: '3rem' }}>
+                <div className="spinner-border text-primary" role="status">
                     <span className="visually-hidden">Loading...</span>
                 </div>
             </div>
@@ -59,7 +61,7 @@ function App() {
     return (
         <Router>
             <AuthProvider>
-               <ThemeProvider>  
+                <ThemeProvider>  {/* ← ADD THIS WRAPPER */}
                     <AppRoutes />
                 </ThemeProvider>
             </AuthProvider>
