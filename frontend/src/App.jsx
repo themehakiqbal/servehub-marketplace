@@ -3,7 +3,8 @@ import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-d
 import { AuthProvider, useAuth } from './context/AuthContext';
 import { ThemeProvider } from './context/ThemeContext';
 import Navbar from './components/common/Navbar';
-import Footer from './components/common/Footer';  // ← ADD THIS
+import Footer from './components/common/Footer';
+import ScrollToTop from './components/common/ScrollToTop';
 import Home from './pages/Home';
 import Login from './pages/Login';
 import Register from './pages/Register';
@@ -16,6 +17,10 @@ import MyServices from './pages/MyServices';
 import MyRequests from './pages/MyRequests';
 import Review from './pages/Review';
 import RequestDetail from './pages/RequestDetail';
+import About from './pages/About';
+import Contact from './pages/Contact';
+import Faq from './pages/Faq';
+import HowItWorks from './pages/HowItWorks';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 const PrivateRoute = ({ children, roles }) => {
@@ -41,6 +46,7 @@ function AppRoutes() {
     return (
         <>
             <Navbar />
+            <ScrollToTop />
             <main style={{ minHeight: 'calc(100vh - 200px)' }}>
                 <Routes>
                     <Route path="/" element={<Home />} />
@@ -55,9 +61,13 @@ function AppRoutes() {
                     <Route path="/create-service" element={<PrivateRoute roles={['provider']}><CreateService /></PrivateRoute>} />
                     <Route path="/review/:requestId" element={<PrivateRoute><Review /></PrivateRoute>} />
                     <Route path="/requests/:id" element={<PrivateRoute><RequestDetail /></PrivateRoute>} />
+                    <Route path="/about" element={<About />} />
+                    <Route path="/contact" element={<Contact />} />
+                    <Route path="/faq" element={<Faq />} />
+                    <Route path="/how-it-works" element={<HowItWorks />} />
                 </Routes>
             </main>
-            <Footer />  {/* ← ADD THIS */}
+            <Footer />
         </>
     );
 }

@@ -1,21 +1,81 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Container, Row, Col, Button, Form, InputGroup } from 'react-bootstrap';
+import { Container, Row, Col, Button, Form, InputGroup, Alert, Spinner } from 'react-bootstrap';
 import { 
     FaFacebook, 
     FaTwitter, 
     FaInstagram, 
     FaLinkedin, 
     FaGithub, 
-    FaYoutube,
     FaMapMarkerAlt,
     FaPhone,
     FaEnvelope,
-    FaArrowRight
+    FaArrowRight,
+    FaCheckCircle
 } from 'react-icons/fa';
 
 const Footer = () => {
     const currentYear = new Date().getFullYear();
+    const [email, setEmail] = useState('');
+    const [status, setStatus] = useState({
+        submitting: false,
+        success: false,
+        error: ''
+    });
+
+    const handleSubscribe = async (e) => {
+        e.preventDefault();
+        
+        if (!email) {
+            setStatus({ ...status, error: 'Please enter your email' });
+            return;
+        }
+
+        setStatus({ submitting: true, success: false, error: '' });
+
+        try {
+            const response = await fetch('https://api.web3forms.com/submit', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json'
+                },
+                body: JSON.stringify({
+                    access_key: 'bab93567-ab4d-45ca-b915-df437f737a6b', // Get from web3forms.com
+                    email: email,
+                    subject: 'New Newsletter Subscription',
+                    message: `Email: ${email} has subscribed to the newsletter.`,
+                    to_email: 'mehakiqbal1220@gmail.com'
+                })
+            });
+
+            const result = await response.json();
+
+            if (result.success) {
+                setStatus({ submitting: false, success: true, error: '' });
+                setEmail('');
+                setTimeout(() => {
+                    setStatus({ ...status, success: false });
+                }, 5000);
+            } else {
+                setStatus({ 
+                    submitting: false, 
+                    success: false, 
+                    error: 'Failed to subscribe. Please try again.' 
+                });
+            }
+        } catch (error) {
+            setStatus({ 
+                submitting: false, 
+                success: false, 
+                error: 'Network error. Please try again.' 
+            });
+        }
+    };
+
+    const scrollToTop = () => {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    };
 
     return (
         <footer className="bg-dark text-white pt-5 pb-3 mt-5">
@@ -27,26 +87,45 @@ const Footer = () => {
                         <p className="text-white-50">Get the latest updates on new services and offers.</p>
                     </Col>
                     <Col lg={6}>
-                        <InputGroup>
-                            <Form.Control
-                                type="email"
-                                placeholder="Enter your email"
-                                className="py-2"
-                                style={{ borderRadius: '50px 0 0 50px' }}
-                            />
-                            <Button 
-                                variant="warning" 
-                                className="px-4"
-                                style={{ borderRadius: '0 50px 50px 0' }}
-                            >
-                                Subscribe <FaArrowRight className="ms-2" />
-                            </Button>
-                        </InputGroup>
+                        {status.success && (
+                            <Alert variant="success" className="py-2">
+                                <FaCheckCircle className="me-2" /> Thank you for subscribing!
+                            </Alert>
+                        )}
+                        {status.error && (
+                            <Alert variant="danger" className="py-2">{status.error}</Alert>
+                        )}
+                        <Form onSubmit={handleSubscribe}>
+                            <InputGroup>
+                                <Form.Control
+                                    type="email"
+                                    placeholder="Enter your email"
+                                    value={email}
+                                    onChange={(e) => setEmail(e.target.value)}
+                                    className="py-2"
+                                    style={{ borderRadius: '50px 0 0 50px' }}
+                                    disabled={status.submitting}
+                                />
+                                <Button 
+                                    type="submit"
+                                    variant="warning" 
+                                    className="px-4"
+                                    style={{ borderRadius: '0 50px 50px 0' }}
+                                    disabled={status.submitting}
+                                >
+                                    {status.submitting ? (
+                                        <Spinner animation="border" size="sm" />
+                                    ) : (
+                                        <>Subscribe <FaArrowRight className="ms-2" /></>
+                                    )}
+                                </Button>
+                            </InputGroup>
+                        </Form>
                     </Col>
                 </Row>
 
+                {/* Rest of footer... */}
                 <Row>
-                    {/* Brand & Description */}
                     <Col md={4} className="mb-4 mb-md-0">
                         <h3 className="fw-bold">
                             <span className="text-primary">Serve</span>
@@ -57,79 +136,44 @@ const Footer = () => {
                             with professional service providers worldwide.
                         </p>
                         <div className="d-flex gap-3 mt-3">
-                            <a href="#" className="text-white-50 hover-text-primary" style={{ transition: '0.3s' }}>
+                            <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" className="text-white-50 hover-text-primary" style={{ transition: '0.3s' }}>
                                 <FaFacebook size={22} />
                             </a>
-                            <a href="#" className="text-white-50 hover-text-primary" style={{ transition: '0.3s' }}>
+                            <a href="https://twitter.com" target="_blank" rel="noopener noreferrer" className="text-white-50 hover-text-primary" style={{ transition: '0.3s' }}>
                                 <FaTwitter size={22} />
                             </a>
-                            <a href="#" className="text-white-50 hover-text-primary" style={{ transition: '0.3s' }}>
+                            <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" className="text-white-50 hover-text-primary" style={{ transition: '0.3s' }}>
                                 <FaInstagram size={22} />
                             </a>
-                            <a href="#" className="text-white-50 hover-text-primary" style={{ transition: '0.3s' }}>
+                            <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" className="text-white-50 hover-text-primary" style={{ transition: '0.3s' }}>
                                 <FaLinkedin size={22} />
                             </a>
-                            <a href="#" className="text-white-50 hover-text-primary" style={{ transition: '0.3s' }}>
+                            <a href="https://github.com/themehakiqbal" target="_blank" rel="noopener noreferrer" className="text-white-50 hover-text-primary" style={{ transition: '0.3s' }}>
                                 <FaGithub size={22} />
                             </a>
                         </div>
                     </Col>
 
-                    {/* Quick Links */}
                     <Col md={2} className="mb-4 mb-md-0">
                         <h5 className="fw-bold mb-3">Quick Links</h5>
                         <ul className="list-unstyled">
-                            <li className="mb-2">
-                                <Link to="/" className="text-white-50 text-decoration-none hover-text-warning" style={{ transition: '0.3s' }}>
-                                    Home
-                                </Link>
-                            </li>
-                            <li className="mb-2">
-                                <Link to="/services" className="text-white-50 text-decoration-none hover-text-warning" style={{ transition: '0.3s' }}>
-                                    Services
-                                </Link>
-                            </li>
-                            <li className="mb-2">
-                                <Link to="/about" className="text-white-50 text-decoration-none hover-text-warning" style={{ transition: '0.3s' }}>
-                                    About Us
-                                </Link>
-                            </li>
-                            <li className="mb-2">
-                                <Link to="/contact" className="text-white-50 text-decoration-none hover-text-warning" style={{ transition: '0.3s' }}>
-                                    Contact
-                                </Link>
-                            </li>
+                            <li className="mb-2"><Link to="/" className="text-white-50 text-decoration-none hover-text-warning" onClick={scrollToTop}>Home</Link></li>
+                            <li className="mb-2"><Link to="/services" className="text-white-50 text-decoration-none hover-text-warning" onClick={scrollToTop}>Services</Link></li>
+                            <li className="mb-2"><Link to="/about" className="text-white-50 text-decoration-none hover-text-warning" onClick={scrollToTop}>About Us</Link></li>
+                            <li className="mb-2"><Link to="/contact" className="text-white-50 text-decoration-none hover-text-warning" onClick={scrollToTop}>Contact</Link></li>
+                            <li className="mb-2"><Link to="/faq" className="text-white-50 text-decoration-none hover-text-warning" onClick={scrollToTop}>FAQ</Link></li>
+                            <li className="mb-2"><Link to="/how-it-works" className="text-white-50 text-decoration-none hover-text-warning" onClick={scrollToTop}>How It Works</Link></li>
                         </ul>
                     </Col>
 
-                    {/* For Users */}
                     <Col md={2} className="mb-4 mb-md-0">
                         <h5 className="fw-bold mb-3">For Users</h5>
                         <ul className="list-unstyled">
-                            <li className="mb-2">
-                                <Link to="/register" className="text-white-50 text-decoration-none hover-text-warning" style={{ transition: '0.3s' }}>
-                                    Become a Provider
-                                </Link>
-                            </li>
-                            <li className="mb-2">
-                                <Link to="/services" className="text-white-50 text-decoration-none hover-text-warning" style={{ transition: '0.3s' }}>
-                                    Find Services
-                                </Link>
-                            </li>
-                            <li className="mb-2">
-                                <Link to="/how-it-works" className="text-white-50 text-decoration-none hover-text-warning" style={{ transition: '0.3s' }}>
-                                    How It Works
-                                </Link>
-                            </li>
-                            <li className="mb-2">
-                                <Link to="/faq" className="text-white-50 text-decoration-none hover-text-warning" style={{ transition: '0.3s' }}>
-                                    FAQ
-                                </Link>
-                            </li>
+                            <li className="mb-2"><Link to="/register" className="text-white-50 text-decoration-none hover-text-warning" onClick={scrollToTop}>Become a Provider</Link></li>
+                            <li className="mb-2"><Link to="/services" className="text-white-50 text-decoration-none hover-text-warning" onClick={scrollToTop}>Find Services</Link></li>
                         </ul>
                     </Col>
 
-                    {/* Contact Info */}
                     <Col md={4} className="mb-4 mb-md-0">
                         <h5 className="fw-bold mb-3">Contact Us</h5>
                         <ul className="list-unstyled">
@@ -164,13 +208,18 @@ const Footer = () => {
                 </Row>
             </Container>
 
-            {/* Custom CSS for hover effects */}
-            <style jsx>{`
-                .hover-text-primary:hover {
-                    color: #4F46E5 !important;
-                }
+            <style>{`
                 .hover-text-warning:hover {
                     color: #FFC107 !important;
+                    transition: 0.3s;
+                }
+                .hover-text-primary:hover {
+                    color: #4F46E5 !important;
+                    transition: 0.3s;
+                }
+                .btn-warning:hover {
+                    transform: translateY(-2px);
+                    box-shadow: 0 5px 15px rgba(255, 193, 7, 0.3);
                 }
             `}</style>
         </footer>

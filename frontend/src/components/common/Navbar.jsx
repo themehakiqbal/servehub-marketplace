@@ -11,7 +11,11 @@ import {
     FaSearch, 
     FaPlusCircle,
     FaMoon,
-    FaSun
+    FaSun,
+    FaInfoCircle,
+    FaQuestionCircle,
+    FaEnvelope,
+    FaLightbulb
 } from 'react-icons/fa';
 
 const Navbar = () => {
@@ -51,46 +55,49 @@ const Navbar = () => {
                 <BsNavbar.Toggle aria-controls="basic-navbar-nav" />
                 <BsNavbar.Collapse id="basic-navbar-nav">
                     <Nav className="ms-auto align-items-center gap-2">
-                        <Nav.Link 
-                            as={Link} 
-                            to="/" 
-                            className={`d-flex align-items-center gap-1 ${darkMode ? 'text-light' : ''}`}
-                        >
+                        {/* Home */}
+                        <Nav.Link as={Link} to="/" className={`d-flex align-items-center gap-1 ${darkMode ? 'text-light' : ''}`}>
                             <FaHome /> Home
                         </Nav.Link>
-                        <Nav.Link 
-                            as={Link} 
-                            to="/services" 
-                            className={`d-flex align-items-center gap-1 ${darkMode ? 'text-light' : ''}`}
-                        >
+                        
+                        {/* Services */}
+                        <Nav.Link as={Link} to="/services" className={`d-flex align-items-center gap-1 ${darkMode ? 'text-light' : ''}`}>
                             <FaSearch /> Services
+                        </Nav.Link>
+
+                        {/* About */}
+                        <Nav.Link as={Link} to="/about" className={`d-flex align-items-center gap-1 ${darkMode ? 'text-light' : ''}`}>
+                            <FaInfoCircle /> About
+                        </Nav.Link>
+
+                        {/* How It Works */}
+                        <Nav.Link as={Link} to="/how-it-works" className={`d-flex align-items-center gap-1 ${darkMode ? 'text-light' : ''}`}>
+                            <FaLightbulb /> How It Works
+                        </Nav.Link>
+
+                        {/* FAQ */}
+                        <Nav.Link as={Link} to="/faq" className={`d-flex align-items-center gap-1 ${darkMode ? 'text-light' : ''}`}>
+                            <FaQuestionCircle /> FAQ
+                        </Nav.Link>
+
+                        {/* Contact */}
+                        <Nav.Link as={Link} to="/contact" className={`d-flex align-items-center gap-1 ${darkMode ? 'text-light' : ''}`}>
+                            <FaEnvelope /> Contact
                         </Nav.Link>
                         
                         {user ? (
                             <>
                                 {user.role === 'provider' && (
                                     <>
-                                        <Nav.Link 
-                                            as={Link} 
-                                            to="/my-services" 
-                                            className={`d-flex align-items-center gap-1 ${darkMode ? 'text-light' : ''}`}
-                                        >
+                                        <Nav.Link as={Link} to="/my-services" className={`d-flex align-items-center gap-1 ${darkMode ? 'text-light' : ''}`}>
                                             <FaBriefcase /> My Services
                                         </Nav.Link>
-                                        <Nav.Link 
-                                            as={Link} 
-                                            to="/create-service" 
-                                            className="d-flex align-items-center gap-1"
-                                        >
+                                        <Nav.Link as={Link} to="/create-service" className="d-flex align-items-center gap-1">
                                             <FaPlusCircle className="text-success" /> Post
                                         </Nav.Link>
                                     </>
                                 )}
-                                <Nav.Link 
-                                    as={Link} 
-                                    to="/my-requests" 
-                                    className={`d-flex align-items-center gap-1 ${darkMode ? 'text-light' : ''}`}
-                                >
+                                <Nav.Link as={Link} to="/my-requests" className={`d-flex align-items-center gap-1 ${darkMode ? 'text-light' : ''}`}>
                                     📋 Requests
                                     {user.role === 'provider' && (
                                         <Badge bg="danger" pill>3</Badge>
@@ -124,7 +131,7 @@ const Navbar = () => {
                                     </NavDropdown.Item>
                                 </NavDropdown>
 
-                                {/* Dark Mode Toggle Button */}
+                                {/* Dark Mode Toggle */}
                                 <Button 
                                     variant="outline-secondary" 
                                     size="sm" 
@@ -137,20 +144,10 @@ const Navbar = () => {
                             </>
                         ) : (
                             <>
-                                <Nav.Link 
-                                    as={Link} 
-                                    to="/login" 
-                                    className={`d-flex align-items-center gap-1 ${darkMode ? 'text-light' : ''}`}
-                                >
+                                <Nav.Link as={Link} to="/login" className={`d-flex align-items-center gap-1 ${darkMode ? 'text-light' : ''}`}>
                                     Login
                                 </Nav.Link>
-                                <Button 
-                                    as={Link} 
-                                    to="/register" 
-                                    variant="primary" 
-                                    size="sm" 
-                                    className="rounded-pill px-4"
-                                >
+                                <Button as={Link} to="/register" variant="primary" size="sm" className="rounded-pill px-4">
                                     Get Started
                                 </Button>
                             </>
