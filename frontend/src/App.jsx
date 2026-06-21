@@ -1,8 +1,9 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import { AuthProvider, useAuth } from './context/AuthContext';
-import { ThemeProvider } from './context/ThemeContext';  // ← ADD THIS
+import { ThemeProvider } from './context/ThemeContext';
 import Navbar from './components/common/Navbar';
+import Footer from './components/common/Footer';  // ← ADD THIS
 import Home from './pages/Home';
 import Login from './pages/Login';
 import Register from './pages/Register';
@@ -40,20 +41,23 @@ function AppRoutes() {
     return (
         <>
             <Navbar />
-            <Routes>
-                <Route path="/" element={<Home />} />
-                <Route path="/login" element={user ? <Navigate to="/dashboard" /> : <Login />} />
-                <Route path="/register" element={user ? <Navigate to="/dashboard" /> : <Register />} />
-                <Route path="/services" element={<Services />} />
-                <Route path="/services/:id" element={<ServiceDetail />} />
-                <Route path="/dashboard" element={<PrivateRoute><Dashboard /></PrivateRoute>} />
-                <Route path="/profile" element={<PrivateRoute><Profile /></PrivateRoute>} />
-                <Route path="/my-services" element={<PrivateRoute roles={['provider']}><MyServices /></PrivateRoute>} />
-                <Route path="/my-requests" element={<PrivateRoute><MyRequests /></PrivateRoute>} />
-                <Route path="/create-service" element={<PrivateRoute roles={['provider']}><CreateService /></PrivateRoute>} />
-                <Route path="/review/:requestId" element={<PrivateRoute><Review /></PrivateRoute>} />
-                <Route path="/requests/:id" element={<PrivateRoute><RequestDetail /></PrivateRoute>} />
-            </Routes>
+            <main style={{ minHeight: 'calc(100vh - 200px)' }}>
+                <Routes>
+                    <Route path="/" element={<Home />} />
+                    <Route path="/login" element={user ? <Navigate to="/dashboard" /> : <Login />} />
+                    <Route path="/register" element={user ? <Navigate to="/dashboard" /> : <Register />} />
+                    <Route path="/services" element={<Services />} />
+                    <Route path="/services/:id" element={<ServiceDetail />} />
+                    <Route path="/dashboard" element={<PrivateRoute><Dashboard /></PrivateRoute>} />
+                    <Route path="/profile" element={<PrivateRoute><Profile /></PrivateRoute>} />
+                    <Route path="/my-services" element={<PrivateRoute roles={['provider']}><MyServices /></PrivateRoute>} />
+                    <Route path="/my-requests" element={<PrivateRoute><MyRequests /></PrivateRoute>} />
+                    <Route path="/create-service" element={<PrivateRoute roles={['provider']}><CreateService /></PrivateRoute>} />
+                    <Route path="/review/:requestId" element={<PrivateRoute><Review /></PrivateRoute>} />
+                    <Route path="/requests/:id" element={<PrivateRoute><RequestDetail /></PrivateRoute>} />
+                </Routes>
+            </main>
+            <Footer />  {/* ← ADD THIS */}
         </>
     );
 }
@@ -62,7 +66,7 @@ function App() {
     return (
         <Router>
             <AuthProvider>
-                <ThemeProvider>  {/* ← ADD THIS WRAPPER */}
+                <ThemeProvider>
                     <AppRoutes />
                 </ThemeProvider>
             </AuthProvider>
