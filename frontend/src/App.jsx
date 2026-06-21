@@ -14,9 +14,9 @@ import Profile from './pages/Profile';
 import MyServices from './pages/MyServices';
 import MyRequests from './pages/MyRequests';
 import Review from './pages/Review';
+import RequestDetail from './pages/RequestDetail';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
-// Protected Route Component
 const PrivateRoute = ({ children, roles }) => {
     const { user } = useAuth();
     if (!user) return <Navigate to="/login" />;
@@ -52,6 +52,7 @@ function AppRoutes() {
                 <Route path="/my-requests" element={<PrivateRoute><MyRequests /></PrivateRoute>} />
                 <Route path="/create-service" element={<PrivateRoute roles={['provider']}><CreateService /></PrivateRoute>} />
                 <Route path="/review/:requestId" element={<PrivateRoute><Review /></PrivateRoute>} />
+                <Route path="/requests/:id" element={<PrivateRoute><RequestDetail /></PrivateRoute>} />
             </Routes>
         </>
     );

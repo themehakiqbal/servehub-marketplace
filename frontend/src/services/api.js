@@ -54,11 +54,13 @@ export const getServicesByCategory = (category) => API.get(`/services/category/$
 export const submitRequest = (data) => API.post('/requests', data);
 export const getCustomerRequests = () => API.get('/requests/customer');
 export const getProviderRequests = () => API.get('/requests/provider');
+export const getRequest = (id) => API.get(`/requests/${id}`);
 export const updateRequestStatus = (id, status, message) => {
     return API.put(`/requests/${id}/status`, { status, message });
 };
 // Review APIs
 export const createReview = (data) => API.post('/reviews', data);
 export const getProviderReviews = (providerId) => API.get(`/reviews/provider/${providerId}`);
+export const getMyReviews = () => API.get('/reviews/customer');
 
 export default API;
