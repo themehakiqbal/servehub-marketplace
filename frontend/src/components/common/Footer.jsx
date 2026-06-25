@@ -2,9 +2,7 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Container, Row, Col, Button, Form, InputGroup, Alert, Spinner } from 'react-bootstrap';
 import { 
-    FaFacebook, 
-    FaTwitter, 
-    FaInstagram, 
+    FaWhatsapp, 
     FaLinkedin, 
     FaGithub, 
     FaMapMarkerAlt,
@@ -41,11 +39,11 @@ const Footer = () => {
                     'Accept': 'application/json'
                 },
                 body: JSON.stringify({
-                    access_key: 'bab93567-ab4d-45ca-b915-df437f737a6b', // Get from web3forms.com
+                    access_key: 'bab93567-ab4d-45ca-b915-df437f737a6b',
                     email: email,
                     subject: 'New Newsletter Subscription',
-                    message: `Email: ${email} has subscribed to the newsletter.`,
-                    to_email: 'mehakiqbal1220@gmail.com'
+                    message: `📧 New subscriber!\n\nEmail: ${email}\n\nThey subscribed to your newsletter on ServeHub.`,
+                    from_name: 'ServeHub Website'
                 })
             });
 
@@ -54,9 +52,7 @@ const Footer = () => {
             if (result.success) {
                 setStatus({ submitting: false, success: true, error: '' });
                 setEmail('');
-                setTimeout(() => {
-                    setStatus({ ...status, success: false });
-                }, 5000);
+                setTimeout(() => setStatus({ ...status, success: false }), 5000);
             } else {
                 setStatus({ 
                     submitting: false, 
@@ -124,8 +120,8 @@ const Footer = () => {
                     </Col>
                 </Row>
 
-                {/* Rest of footer... */}
                 <Row>
+                    {/* Brand & Description */}
                     <Col md={4} className="mb-4 mb-md-0">
                         <h3 className="fw-bold">
                             <span className="text-primary">Serve</span>
@@ -136,58 +132,122 @@ const Footer = () => {
                             with professional service providers worldwide.
                         </p>
                         <div className="d-flex gap-3 mt-3">
-                            <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" className="text-white-50 hover-text-primary" style={{ transition: '0.3s' }}>
-                                <FaFacebook size={22} />
-                            </a>
-                            <a href="https://twitter.com" target="_blank" rel="noopener noreferrer" className="text-white-50 hover-text-primary" style={{ transition: '0.3s' }}>
-                                <FaTwitter size={22} />
-                            </a>
-                            <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" className="text-white-50 hover-text-primary" style={{ transition: '0.3s' }}>
-                                <FaInstagram size={22} />
-                            </a>
-                            <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" className="text-white-50 hover-text-primary" style={{ transition: '0.3s' }}>
+                            <a 
+                                href="https://www.linkedin.com/in/mehak-iqbal-9b5692383/" 
+                                target="_blank" 
+                                rel="noopener noreferrer" 
+                                className="text-white-50 hover-text-primary"
+                                aria-label="LinkedIn"
+                            >
                                 <FaLinkedin size={22} />
                             </a>
-                            <a href="https://github.com/themehakiqbal" target="_blank" rel="noopener noreferrer" className="text-white-50 hover-text-primary" style={{ transition: '0.3s' }}>
+                            <a 
+                                href="https://github.com/themehakiqbal/" 
+                                target="_blank" 
+                                rel="noopener noreferrer" 
+                                className="text-white-50 hover-text-primary"
+                                aria-label="GitHub"
+                            >
                                 <FaGithub size={22} />
+                            </a>
+                            <a 
+                                href="https://wa.me/923044516234" 
+                                target="_blank" 
+                                rel="noopener noreferrer" 
+                                className="text-white-50 hover-text-primary"
+                                aria-label="WhatsApp"
+                            >
+                                <FaWhatsapp size={22} />
                             </a>
                         </div>
                     </Col>
 
+                    {/* Quick Links */}
                     <Col md={2} className="mb-4 mb-md-0">
                         <h5 className="fw-bold mb-3">Quick Links</h5>
                         <ul className="list-unstyled">
-                            <li className="mb-2"><Link to="/" className="text-white-50 text-decoration-none hover-text-warning" onClick={scrollToTop}>Home</Link></li>
-                            <li className="mb-2"><Link to="/services" className="text-white-50 text-decoration-none hover-text-warning" onClick={scrollToTop}>Services</Link></li>
-                            <li className="mb-2"><Link to="/about" className="text-white-50 text-decoration-none hover-text-warning" onClick={scrollToTop}>About Us</Link></li>
-                            <li className="mb-2"><Link to="/contact" className="text-white-50 text-decoration-none hover-text-warning" onClick={scrollToTop}>Contact</Link></li>
-                            <li className="mb-2"><Link to="/faq" className="text-white-50 text-decoration-none hover-text-warning" onClick={scrollToTop}>FAQ</Link></li>
-                            <li className="mb-2"><Link to="/how-it-works" className="text-white-50 text-decoration-none hover-text-warning" onClick={scrollToTop}>How It Works</Link></li>
+                            <li className="mb-2">
+                                <Link to="/" className="text-white-50 text-decoration-none hover-text-warning" onClick={scrollToTop}>
+                                    Home
+                                </Link>
+                            </li>
+                            <li className="mb-2">
+                                <Link to="/services" className="text-white-50 text-decoration-none hover-text-warning" onClick={scrollToTop}>
+                                    Services
+                                </Link>
+                            </li>
+                            <li className="mb-2">
+                                <Link to="/about" className="text-white-50 text-decoration-none hover-text-warning" onClick={scrollToTop}>
+                                    About Us
+                                </Link>
+                            </li>
+                            <li className="mb-2">
+                                <Link to="/contact" className="text-white-50 text-decoration-none hover-text-warning" onClick={scrollToTop}>
+                                    Contact
+                                </Link>
+                            </li>
+                            <li className="mb-2">
+                                <Link to="/faq" className="text-white-50 text-decoration-none hover-text-warning" onClick={scrollToTop}>
+                                    FAQ
+                                </Link>
+                            </li>
+                            <li className="mb-2">
+                                <Link to="/how-it-works" className="text-white-50 text-decoration-none hover-text-warning" onClick={scrollToTop}>
+                                    How It Works
+                                </Link>
+                            </li>
                         </ul>
                     </Col>
 
+                    {/* For Users */}
                     <Col md={2} className="mb-4 mb-md-0">
                         <h5 className="fw-bold mb-3">For Users</h5>
                         <ul className="list-unstyled">
-                            <li className="mb-2"><Link to="/register" className="text-white-50 text-decoration-none hover-text-warning" onClick={scrollToTop}>Become a Provider</Link></li>
-                            <li className="mb-2"><Link to="/services" className="text-white-50 text-decoration-none hover-text-warning" onClick={scrollToTop}>Find Services</Link></li>
+                            <li className="mb-2">
+                                <Link to="/register" className="text-white-50 text-decoration-none hover-text-warning" onClick={scrollToTop}>
+                                    Become a Provider
+                                </Link>
+                            </li>
+                            <li className="mb-2">
+                                <Link to="/services" className="text-white-50 text-decoration-none hover-text-warning" onClick={scrollToTop}>
+                                    Find Services
+                                </Link>
+                            </li>
                         </ul>
                     </Col>
 
+                    {/* Contact Info - ALL CLICKABLE */}
                     <Col md={4} className="mb-4 mb-md-0">
                         <h5 className="fw-bold mb-3">Contact Us</h5>
                         <ul className="list-unstyled">
                             <li className="mb-3 d-flex align-items-start">
                                 <FaMapMarkerAlt className="text-warning me-2 mt-1" />
-                                <span className="text-white-50">Karachi, Pakistan</span>
+                                <a 
+                                    href="https://maps.google.com/?q=Lahore,Pakistan" 
+                                    target="_blank" 
+                                    rel="noopener noreferrer"
+                                    className="text-white-50 text-decoration-none hover-text-warning"
+                                >
+                                    Lahore, Pakistan
+                                </a>
                             </li>
                             <li className="mb-3 d-flex align-items-start">
                                 <FaPhone className="text-warning me-2 mt-1" />
-                                <span className="text-white-50">+92 300 1234567</span>
+                                <a 
+                                    href="tel:+923044516234" 
+                                    className="text-white-50 text-decoration-none hover-text-warning"
+                                >
+                                    +92 304 4516234
+                                </a>
                             </li>
                             <li className="mb-3 d-flex align-items-start">
                                 <FaEnvelope className="text-warning me-2 mt-1" />
-                                <span className="text-white-50">mehakiqbal1220@gmail.com</span>
+                                <a 
+                                    href="mailto:mehakiqbal1220@gmail.com" 
+                                    className="text-white-50 text-decoration-none hover-text-warning"
+                                >
+                                    mehakiqbal1220@gmail.com
+                                </a>
                             </li>
                         </ul>
                     </Col>
@@ -220,6 +280,9 @@ const Footer = () => {
                 .btn-warning:hover {
                     transform: translateY(-2px);
                     box-shadow: 0 5px 15px rgba(255, 193, 7, 0.3);
+                }
+                .text-white-50:hover {
+                    transition: 0.3s;
                 }
             `}</style>
         </footer>
